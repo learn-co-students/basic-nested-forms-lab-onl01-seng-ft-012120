@@ -1,0 +1,24 @@
+<%= form_for @recipe do |form_builder| %>
+
+<fieldset>
+  <legend>Create a new recipe</legend>
+    <p>
+    <%= form_builder.label :title %>
+    <%= form_builder.text_field :title %>
+    </p>
+
+    <p>
+      <%= form_builder.fields_for :ingredients do |ingredient| %>
+      <p>
+       <%= ingredient.label :name %>
+       <%= ingredient.text_field :name %>
+       <%= ingredient.label :quantity %>
+       <%= ingredient.text_field :quantity %>
+      </p>
+      <% end %>
+    </p>
+</fieldset>
+
+
+  <%= form_builder.submit  %>
+<% end %>
