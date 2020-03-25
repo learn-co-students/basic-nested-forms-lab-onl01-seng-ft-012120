@@ -9,8 +9,43 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    # @recipe.ingredients.build(name: recipe_params[:ingredients_attributes][:name])
+    @recipe.ingredients.build(name: "ingredient 1")
+    @recipe.ingredients.build(name: "ingredient 2")
   end
 
   def create
+    @recipe = Recipe.new(recipe_params)
+    if @recipe.save 
+      redirect_to @recipe
+    else 
+      render :new 
+    end
+  end
+
+  private
+
+  # def recipe_params
+  #   params.require(:recipe).permit(
+  #     :title, 
+  #     ingredients_attributes: [
+  #       :name,
+  #       :quantity
+  #     ]
+  #   )
+  # end
+
+  def recipe_params
+    params.require(:recipe).permit(
+      :title,
+      ingredients_attributes: [ :name, :quantity ]
+    )
   end
 end
+
+#do i have to create the hash in the console first?  
+    #  Capybara::ElementNotFound:
+    #  Unable to find field :recipe_ingredients_attributes_1_name that is not disabled
+
+# new_recipe = Recipe.new 
+# new_recipe.ingredients_attributes={"0"=>{"name" => "sugar", "quantity" => "2 tbs"}}
